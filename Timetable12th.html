@@ -56,7 +56,7 @@
         .card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--primary); box-shadow: var(--glow); }
         .card h2 { border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 20px; font-size: 1.1rem; color: var(--primary); display: flex; align-items: center; gap: 8px;}
 
-        /* FIX: Dragon Roadmap Panel */
+        /* Guardian Roadmap Panel */
         .dragon-panel {
             display: flex; flex-direction: column; gap: 15px; align-items: center; text-align: center;
             background: linear-gradient(45deg, #000000, #0a1118); border: 2px solid var(--accent);
@@ -65,12 +65,11 @@
         }
         .dragon-image { 
             width: 100%; 
-            max-height: 220px; 
-            object-fit: contain; /* Ensures it perfectly fits without bleeding */
+            max-height: 250px; 
+            object-fit: contain; 
             border-radius: 8px; 
             border: 1px solid var(--accent); 
             background: #000;
-            opacity: 0.9; 
         }
         .dragon-dialogue { background: rgba(0, 229, 255, 0.1); border: 1px solid var(--primary); padding: 15px; border-radius: 8px; color: var(--text-main); font-size: 0.95rem; box-shadow: var(--glow); width: 100%; }
 
@@ -87,7 +86,7 @@
         }
         #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
 
-        /* FIX: Monthly Interactive Calendar */
+        /* Monthly Interactive Calendar */
         .cal-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; color: var(--primary); }
         .cal-controls button { background: transparent; border: 1px solid var(--primary); color: var(--primary); padding: 5px 15px; border-radius: 5px; cursor: pointer; transition: 0.2s; display: flex; align-items: center;}
         .cal-controls button:hover { background: rgba(0,229,255,0.2); box-shadow: var(--glow); color: #fff; }
@@ -113,13 +112,15 @@
         .progress-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.5s ease; box-shadow: var(--glow); }
         .progress-text { font-size: 0.8rem; font-weight: bold; color: var(--text-main); margin-bottom: 2px;}
         
-        .heatmap-container { margin-top: 20px; }
-        .heatmap-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15px, 1fr)); gap: 4px; }
-        .heat-cell { width: 100%; aspect-ratio: 1; border-radius: 3px; background: #1e293b; border: 1px solid #0f172a; transition: transform 0.2s; }
-        .heat-cell:hover { transform: scale(1.5); z-index: 2; box-shadow: var(--glow); border-color: var(--primary); }
-        .heat-lvl-1 { background: rgba(0, 229, 255, 0.3); }
-        .heat-lvl-2 { background: rgba(0, 229, 255, 0.6); }
-        .heat-lvl-3 { background: rgba(0, 229, 255, 1); box-shadow: var(--glow); }
+        /* Authentic GitHub Heatmap UI */
+        .heatmap-container { margin-top: 20px; overflow-x: auto; padding-bottom: 10px; }
+        .heatmap-grid { display: flex; flex-wrap: wrap; gap: 4px; }
+        .heat-cell { width: 14px; height: 14px; border-radius: 2px; background: #161b22; outline: 1px solid rgba(255,255,255,0.02); transition: transform 0.2s; }
+        .heat-cell:hover { transform: scale(1.5); z-index: 2; border-color: var(--primary); outline: 1px solid var(--primary); }
+        .heat-lvl-1 { background: #0e4429; }
+        .heat-lvl-2 { background: #006d32; }
+        .heat-lvl-3 { background: #26a641; }
+        .heat-lvl-4 { background: #39d353; box-shadow: 0 0 5px rgba(57, 211, 83, 0.4); }
 
         .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
         .data-box { background: rgba(0,0,0,0.4); padding: 20px; border-radius: 8px; border: 1px solid #1e293b; }
@@ -195,7 +196,7 @@
     <main>
         <section id="overview" class="section active">
             <div class="dragon-panel">
-                <img src="https://images.unsplash.com/photo-1577493340887-b7bfff550145?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Dragon Academic Guardian" class="dragon-image">
+                <img src="guardian.jpg" alt="Academic Guardian" class="dragon-image" onerror="this.src='https://images.unsplash.com/photo-1577493340887-b7bfff550145?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'">
                 <div class="dragon-dialogue">
                     <strong style="color: var(--accent);">[A.I. GUARDIAN]:</strong> 
                     <span id="dragonText">Awaiting data sync... Keep pushing, Scholar.</span>
@@ -346,12 +347,11 @@
     </div>
 
     <script>
-        const START_DATE = new Date(2026, 2, 25); // March 25, 2026
+        const START_DATE = new Date(2026, 2, 25); 
         
         let viewMonth = START_DATE.getMonth();
         let viewYear = START_DATE.getFullYear();
 
-        // 90-Day Array
         const timetable = [
             // PHASE 1: FOUNDATION REPAIR (Class 10 & 11)
             { day: 1, bio: 'Cell structure', chem: 'Atomic structure', phy: 'Units & measurements', ip: 'Python intro', num: '10 basic unit conversions', diag: 'Animal cell' },
@@ -608,12 +608,14 @@
                 let heatClass = '';
                 if(i < currentDay) {
                     const r = Math.random();
-                    if(r > 0.7) { heatClass = 'heat-lvl-3'; totalHours += 6; }
-                    else if(r > 0.3) { heatClass = 'heat-lvl-2'; totalHours += 4; }
-                    else { heatClass = 'heat-lvl-1'; totalHours += 2; }
+                    if(r > 0.8) { heatClass = 'heat-lvl-4'; totalHours += 7; }
+                    else if(r > 0.6) { heatClass = 'heat-lvl-3'; totalHours += 5; }
+                    else if(r > 0.3) { heatClass = 'heat-lvl-2'; totalHours += 3; }
+                    else { heatClass = 'heat-lvl-1'; totalHours += 1; }
                 } else if (i === currentDay) {
                     const loggedToday = parseInt(localStorage.getItem('dailyHours') || 0);
-                    if(loggedToday >= 6) heatClass = 'heat-lvl-3';
+                    if(loggedToday >= 7) heatClass = 'heat-lvl-4';
+                    else if(loggedToday >= 5) heatClass = 'heat-lvl-3';
                     else if(loggedToday >= 3) heatClass = 'heat-lvl-2';
                     else if(loggedToday > 0) heatClass = 'heat-lvl-1';
                     totalHours += loggedToday;
